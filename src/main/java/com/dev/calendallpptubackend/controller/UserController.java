@@ -36,9 +36,16 @@ public class UserController {
         if(response != null){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User with the provided email is already registered.");
         }
-        
+
         return ResponseEntity.ok(_userService.createUser(user));
     }
     
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User oldUser = _userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
+
+        return ResponseEntity.ok(oldUser);
+
+    }
 
 }
